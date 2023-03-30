@@ -58,7 +58,7 @@ public class ResourceNodeGraphMatcher implements GraphNodeMatcher<ResourceNode<?
     }
 
     @Override
-    public GraphNodeMatcher<ResourceNode<? extends Vertex>> finUndirected(Class<? extends Edge> type) {
+    public GraphNodeMatcher<ResourceNode<? extends Vertex>> findUndirected(Class<? extends Edge> type) {
         relations.add(new RelationType(type, false, RelationDirection.OUT));
         return this;
     }

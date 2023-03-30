@@ -19,7 +19,7 @@ public interface GraphNodeMatcher<R extends ResourceElement<? extends Vertex>> e
 
     GraphNodeMatcher<R> findDirected(Class<? extends Edge> type, RelationDirection direction);
 
-    GraphNodeMatcher<R> finUndirected(Class<? extends Edge> type);
+    GraphNodeMatcher<R> findUndirected(Class<? extends Edge> type);
 
     GraphNodeMatcher<R> filter(Map<String, Object> filterParams);
 

@@ -1,12 +1,9 @@
 package com.example.finder.demo.people;
 
-import com.example.finder.graph.framework.Edge;
 import com.example.finder.graph.framework.Vertex;
 import com.example.finder.resource.framework.*;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.Date;
 
 /**
  * @author JingGe(* ^ ▽ ^ *)
@@ -33,53 +30,57 @@ public class PeopleTest {
         ResourceNode<People> zhao = new GraphResourceNode<>(people6);
         ResourceNode<People> sun = new GraphResourceNode<>(people7);
 
-        /*=================批量创建关系=================>*/
-        Map<FriendOf, ResourceNode<People>> toMap = new HashMap<>();
-        toMap.put(new FriendOf(), li);
-        toMap.put(new FriendOf(), wang);
-        toMap.put(new FriendOf(), huang);
-        toMap.put(new FriendOf(), hu);
-        List<ResourceRelation<? extends Edge>> relations = zhang.linksUndirected(toMap);
-        relations.forEach(item -> System.out.println(item.getInEdgeId() + "," + item.getOutEdgeId()));
-        /*=======================Finished======================<*/
+        ///*=================批量创建关系=================>*/
+        //Map<FriendOf, ResourceNode<People>> toMap = new HashMap<>();
+        //toMap.put(new FriendOf(), li);
+        //toMap.put(new FriendOf(), wang);
+        //toMap.put(new FriendOf(), huang);
+        //toMap.put(new FriendOf(), hu);
+        //List<ResourceRelation<? extends Edge>> relations = zhang.linksUndirected(toMap);
+        //relations.forEach(item -> System.out.println(item.getInEdgeId() + "," + item.getOutEdgeId()));
+        ///*=======================Finished======================<*/
 
         /*=================分页查询=================>*/
         PagedResult<ResourceNode<? extends Vertex>> pagedResult = graph.extractNodes(QueryParamsBuilder
                 .newInstance()
                 .addParams("sex", "男")
                 .getParams(), new PageConfig(1, 5, true));
-        System.out.println(pagedResult);
+        System.out.println("分页结果：" + pagedResult.getSources());
+        System.out.println("总条数：" + pagedResult.getTotal());
         /*=======================Finished======================<*/
 
 
-        ////张三和所有人都是同学
-        //zhang.linkUndirected(li, new GraphResourceRelation<>(new ClassMates(new Date())));
-        //zhang.linkUndirected(wang, new GraphResourceRelation<>(new ClassMates(new Date())));
-        //zhang.linkUndirected(huang, new GraphResourceRelation<>(new ClassMates(new Date())));
-        //zhang.linkUndirected(hu, new GraphResourceRelation<>(new ClassMates(new Date())));
-        //zhang.linkUndirected(zhao, new GraphResourceRelation<>(new ClassMates(new Date())));
-        //zhang.linkUndirected(sun, new GraphResourceRelation<>(new ClassMates(new Date())));
-        //
-        ////黄六和胡、赵、孙是朋友
-        //huang.linkUndirected(hu, new GraphResourceRelation<>(new FriendOf()));
-        //huang.linkUndirected(zhao, new GraphResourceRelation<>(new FriendOf()));
-        //huang.linkUndirected(sun, new GraphResourceRelation<>(new FriendOf()));
-        //
-        ////胡和张、李、王是朋友
-        //hu.linkUndirected(zhang, new GraphResourceRelation<>(new FriendOf()));
-        //hu.linkUndirected(li, new GraphResourceRelation<>(new FriendOf()));
-        //hu.linkUndirected(wang, new GraphResourceRelation<>(new FriendOf()));
+        //张三和所有人都是同学
+        zhang.linkUndirected(li, new GraphResourceRelation<>(new ClassMates(new Date())));
+        zhang.linkUndirected(wang, new GraphResourceRelation<>(new ClassMates(new Date())));
+        zhang.linkUndirected(huang, new GraphResourceRelation<>(new ClassMates(new Date())));
+        zhang.linkUndirected(hu, new GraphResourceRelation<>(new ClassMates(new Date())));
+        zhang.linkUndirected(zhao, new GraphResourceRelation<>(new ClassMates(new Date())));
+        zhang.linkUndirected(sun, new GraphResourceRelation<>(new ClassMates(new Date())));
+
+        //黄六和胡、赵、孙是朋友
+        huang.linkUndirected(hu, new GraphResourceRelation<>(new FriendOf()));
+        huang.linkUndirected(zhao, new GraphResourceRelation<>(new FriendOf()));
+        huang.linkUndirected(sun, new GraphResourceRelation<>(new FriendOf()));
+
+        //胡和张、李、王是朋友
+        hu.linkUndirected(zhang, new GraphResourceRelation<>(new FriendOf()));
+        hu.linkUndirected(li, new GraphResourceRelation<>(new FriendOf()));
+        hu.linkUndirected(wang, new GraphResourceRelation<>(new FriendOf()));
 
         /*=================关系查找=================>*/
-        //查找张三的所有朋友
+
+        //查找张三的朋友的朋友
         graph
                 .getGraphResourceNodeMatcher()
                 .asStart(zhang)
-                .finUndirected(FriendOf.class)
+                .findUndirected(FriendOf.class)
+                .findUndirected(FriendOf.class)
                 .collect(People.class)
                 .forEach(item -> System.out.println(item.getSource()));
         /*=======================Finished======================<*/
 
 
     }
+
 }

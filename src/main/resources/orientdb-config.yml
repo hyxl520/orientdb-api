@@ -1,0 +1,14 @@
+orientDB:
+  #  图数据库IP地址
+  url: "localhost"
+  #  图数据库库名
+  database: "testDB"
+  #  访问用户名
+  username: "root"
+  #  访问密码
+  password: "0000"
+  #  连接池配置
+  pool:
+    min: 5
+    max: 30
+    acquireTimeout: 30

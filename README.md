@@ -168,6 +168,25 @@ public static void main(String[] args) {
 
 图的元素分为顶点和边两类，在使用图数据库时我们一定要想好以前在关系型数据库中存的数据如何在建立模型，如介绍中的教学楼-教室-桌椅模型。创建好模型后就需要定义顶点实体类，如特性中的`People`类，以及关系类顶点实体类需要实现Vertex接口，关系类需要实现Edge接口。
 
+图数据库的相关配置在`orientdb-config.yml`中下面是一个配置示列:
+
+```yml
+orientDB:
+  #  图数据库IP地址
+  url: "localhost"
+  #  图数据库库名
+  database: "testDB"
+  #  访问用户名
+  username: "root"
+  #  访问密码
+  password: "0000"
+  #  连接池配置
+  pool:
+    min: 5
+    max: 30
+    acquireTimeout: 30
+```
+
 #### 2.1 创建顶点
 
 ```java
